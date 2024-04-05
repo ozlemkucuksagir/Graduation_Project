@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:metaozce/const/constant.dart';
 import 'package:metaozce/pages/HomePage/home_screen.dart';
 import 'package:metaozce/pages/SignupPage/signup_screen.dart';
+import 'package:metaozce/widgets/navigationBar.dart';
 
 class SigninView extends StatefulWidget {
   const SigninView({Key? key}) : super(key: key);
@@ -33,28 +34,9 @@ class _SigninViewState extends State<SigninView> {
           Center(
             child: Form(
                         key: formKey,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                
-                                left: 8,
-                                right: 8,
-                              ),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 3,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  
-                                ),
-                              ),
-                            ),
-                          /*  Image.asset(
-                              "assets/logo/logodhp2.PNG",
-                              width: 200,
-                            ),*/
-                            Padding(
+                        child: Column(                         
+                          children: [                        
+                              Padding(
                               padding: EdgeInsets.only(
                                   left: 45, right: 45, bottom: 20,top:50),
                               child: Column(
@@ -63,11 +45,10 @@ class _SigninViewState extends State<SigninView> {
                                     height: defaultPadding,
                                   ),
                                   Text(
-                                    "HELLO SIGNIN",
-                                    style: GoogleFonts.ubuntu(
-                                        textStyle: TextStyle(color: Colors.white,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 30)),
+                                    "HELLO SIGN IN",
+                                    style:  TextStyle(color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 30),
                                     textAlign: TextAlign.center, // Metni ortala
                                   ),
                                   
@@ -81,7 +62,7 @@ class _SigninViewState extends State<SigninView> {
                                   Align(
                                     alignment: Alignment.bottomRight,
                                     child: Padding(
-                                      padding: EdgeInsets.only(right: 25),
+                                      padding: EdgeInsets.only(right:16,bottom: 35),
                                       child: RichText(
                                         text: TextSpan(
                                             style: TextStyle(
@@ -91,34 +72,30 @@ class _SigninViewState extends State<SigninView> {
                                               TextSpan(
                                                   text:
                                                       "Forgot password?",
-                                                  style: GoogleFonts.roboto(
-                                                    textStyle: TextStyle(
+                                                  style: TextStyle(
                                                       color: kPrimaryColor,
                                                       
                                                    
-                                                    ),
+                                                    
                                                   ),
                                                   )
                                             ]),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: defaultPadding * 2),
+                                  const SizedBox(height: defaultPadding * 8),
                                   buildLogin(),
-                                  const SizedBox(height: defaultPadding),
-                                  Center(//todo logolar buraya da gelebilir
-                                  ),
-                                  const SizedBox(height: defaultPadding),
+                                  
+                                
                                   Align(
                                     alignment: Alignment.bottomCenter,
                                     child: Padding(
                                       padding: EdgeInsets.only(right: 0),
                                       child: RichText(
                                         text: TextSpan(
-                                            style: GoogleFonts.roboto(
-                                              textStyle: TextStyle(
+                                            style: TextStyle(
                                                   color: textColorMid,
-                                                  fontSize: 14),
+                                                  fontSize: 14
                                             ),
                                             children: [
                                              //todo buraya logolar gelecek gmail vs.
@@ -133,10 +110,9 @@ class _SigninViewState extends State<SigninView> {
                                       padding: EdgeInsets.only(right: 0),
                                       child: RichText(
                                         text: TextSpan(
-                                            style: GoogleFonts.roboto(
-                                              textStyle: TextStyle(
+                                            style:  TextStyle(
                                                   color: textColorMid,
-                                                  fontSize: 14),
+                                                  fontSize: 14
                                             ),
                                             children: [
                                               TextSpan(
@@ -185,9 +161,11 @@ Widget buildLogin() => Builder(
             final isValid = formKey.currentState!.validate();
             if (isValid) {
              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-            );
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NavigationBarMy(),
+                                ),
+                              );
             }
           },
           style: ElevatedButton.styleFrom(
@@ -206,7 +184,9 @@ Widget buildLogin() => Builder(
             animationDuration: Duration(milliseconds: 300), // Animasyon süresi
             // Butona basıldığında ara rengin belirlenmesi
       ),
-          child: Text("SIGN IN",style: TextStyle(color: kPrimaryWhiteColor),),
+          child: Text("SIGN IN",style: TextStyle(color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 20)),
         ),
       ),
     );
