@@ -23,7 +23,7 @@ class Background extends StatelessWidget {
           '${title}',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: kPrimaryLightColor,
+        backgroundColor: kPrimaryColor,
       ),
       // bottomNavigationBar:
       resizeToAvoidBottomInset: false,

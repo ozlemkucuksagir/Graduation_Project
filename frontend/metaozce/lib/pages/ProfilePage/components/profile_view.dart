@@ -17,33 +17,38 @@ class ProfileScreenView extends StatelessWidget {
           ProfilePic(),
           SizedBox(height: 20),
           ProfileMenu(
-            text: "Hesap",
+            text: "Account",
             icon: Icon(
               Icons.person,
                color: kPrimaryColor,
             ),
             press: () => {},
           ),
-          
           ProfileMenu(
-            text: "Bildirimler",
+            text: "Visited Hotels",
+            icon: Icon(Icons.hotel,  color: kPrimaryColor,),
+            
+            press: () {},
+          ),
+          ProfileMenu(
+            text: "Motification",
             icon: Icon(Icons.notifications,  color: kPrimaryColor,),
             
             press: () {},
           ),
           ProfileMenu(
-            text: "Ayarlar",
+            text: "Settings",
             icon: Icon(Icons.settings,  color: kPrimaryColor,),
             press: () {},
           ),
           ProfileMenu(
-            text: "Geri Dönüş",
+            text: "Feedback",
             icon: Icon(Icons.feedback,  color: kPrimaryColor,),
             press: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => HomeScreen())),
           ),
           ProfileMenu(
-            text: "Çıkış Yap",
+            text: "Logout",
             icon: Icon(Icons.logout,  color: kPrimaryColor,),
             press: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SignupScreen())),

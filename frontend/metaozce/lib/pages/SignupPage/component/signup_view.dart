@@ -5,6 +5,8 @@ import 'package:metaozce/const/constant.dart';
 import 'package:metaozce/pages/HomePage/home_screen.dart';
 import 'package:metaozce/pages/SigninPage/signin_screen.dart';
 import 'package:metaozce/pages/SignupPage/signup_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:async';
 
 class SignupView extends StatefulWidget {
   const SignupView({Key? key}) : super(key: key);
@@ -15,7 +17,10 @@ class SignupView extends StatefulWidget {
 
 class _SignupViewState extends State<SignupView> {
   final TextEditingController controller = TextEditingController();
-
+  bool flagFullname = false;
+  bool flagUsername = false;
+  bool flagPassword = false;
+  bool flagPasswordAgain = false;
   final formKey = GlobalKey<FormState>();
   final TextEditingController controllerFullname = TextEditingController();
   final TextEditingController controllerUsername = TextEditingController();
@@ -25,7 +30,28 @@ class _SignupViewState extends State<SignupView> {
       false; //giriş yapınca true olacak, dbye gönderilecek, öbür sayfalarda dbden çekilecek
   bool hidePassword = true;
   bool hidePasswordAgain = true;
-
+void showToast(String message, Color backgroundColor) {
+  Fluttertoast.showToast(
+    fontSize: 15,
+    toastLength: Toast.LENGTH_LONG,
+    msg: message,
+    gravity: ToastGravity.BOTTOM,
+    backgroundColor: backgroundColor,
+  );
+}
+void checkFlagsAndShowToast() {
+  if (!flagFullname) {
+    showToast("Fullname can't be shorter than 5 characters.", Colors.red);
+  } else if (!flagUsername) {
+    showToast("Username can't be shorter than 5 characters.", Colors.red);
+  } else if (!flagPassword) {
+    showToast("Password can't be shorter than 7 characters.", Colors.red);
+  } else if (!flagPasswordAgain) {
+    showToast("Password Again can't be shorter than 7 characters.", Colors.red);
+  } else if (controllerPassword.text != controllerPasswordAgain.text) {
+    showToast("Passwords do not match.", Colors.red);
+  }
+}
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -83,7 +109,6 @@ class _SignupViewState extends State<SignupView> {
                     const SizedBox(height: defaultPadding),
                     Center(//todo logolar buraya da gelebilir
                         ),
-                    
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
@@ -98,7 +123,7 @@ class _SignupViewState extends State<SignupView> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: defaultPadding*0.1),
+                    const SizedBox(height: defaultPadding * 0.1),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
@@ -138,51 +163,77 @@ class _SignupViewState extends State<SignupView> {
     );
   }
 
+  bool _isButtonDisabled = false;
+
   Widget buildLogin() => Builder(
         builder: (context) => SizedBox(
-          width: double.infinity, // Genişlik ayarı
+          width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {
-              final isValid = formKey.currentState!.validate();
-              if (isValid) {
-                print(controllerFullname);
-                print(controllerUsername);
-                print(controllerPassword);
-                print(controllerPasswordAgain);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
-              }
-            },
+            onPressed: _isButtonDisabled
+                ? null
+                : () {
+                    setState(() {
+                      _isButtonDisabled = true;
+                    });
+
+                    final Timer timer = Timer(Duration(seconds: 1), () {
+                      setState(() {
+                        _isButtonDisabled = false;
+                      });
+                    });
+
+                    final isValid = formKey.currentState!.validate();
+                    if (flagFullname &&
+                        flagPasswordAgain &&
+                        flagPassword &&
+                        isValid) {
+                      Fluttertoast.showToast(
+                          fontSize: 15,
+                          toastLength: Toast.LENGTH_LONG,
+                          msg: "Kayıt başarılır",
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: Colors.green);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SigninScreen()),
+                      ).then((value) {
+                        timer.cancel();
+                        setState(() {
+                          _isButtonDisabled = false;
+                        });
+                      });
+                    } 
+                    else {
+                       checkFlagsAndShowToast();
+                    }
+                  },
             style: ElevatedButton.styleFrom(
-              backgroundColor: kPrimaryColor, // Buton rengi
+              backgroundColor: _isButtonDisabled ? Colors.grey : kPrimaryColor,
               textStyle: TextStyle(
                 fontSize: MediaQuery.of(context).size.width * 0.045,
               ),
-              elevation: 4, // Butonun yüksekliği
-              shadowColor: Colors.grey, // Gölgelenme rengi
-              padding:
-                  EdgeInsets.symmetric(vertical: 16), // Buton iç içe boşluk
+              elevation: 4,
+              shadowColor: Colors.grey,
+              padding: EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                    50), // Buton köşelerinin yuvarlanma derecesi
+                borderRadius: BorderRadius.circular(50),
               ),
-              minimumSize: Size(double.infinity, 50), // Butonun minimum boyutu
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap, // Basılma boyutu
-              animationDuration:
-                  Duration(milliseconds: 300), // Animasyon süresi
-              // Butona basıldığında ara rengin belirlenmesi
+              minimumSize: Size(double.infinity, 50),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              animationDuration: Duration(milliseconds: 300),
             ),
-            child: Text("SIGN UP",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20)),
+            child: Text(
+              "SIGN UP",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
+              ),
+            ),
           ),
         ),
       );
-  bool flagFullname = false;
+
   Widget buildFullname() => TextFormField(
         controller: controllerFullname,
         decoration: InputDecoration(
@@ -218,7 +269,6 @@ class _SignupViewState extends State<SignupView> {
         },
       );
 
-  bool flagUsername = false;
   Widget buildUsername() => TextFormField(
         controller: controllerUsername,
         decoration: InputDecoration(
@@ -254,7 +304,6 @@ class _SignupViewState extends State<SignupView> {
         },
       );
 
-  bool flagPassword = false;
   Widget buildPassword() => TextFormField(
         controller: controllerPassword,
         decoration: InputDecoration(
@@ -288,8 +337,8 @@ class _SignupViewState extends State<SignupView> {
         ),
         style: TextStyle(
           color: flagPassword
-              ? Color.fromARGB(255, 9, 129, 228)
-              : Color.fromARGB(255, 168, 168, 168),
+              ? kPrimaryColor
+              : grey,
         ),
         maxLength: 20,
         onChanged: (value) {
@@ -305,7 +354,6 @@ class _SignupViewState extends State<SignupView> {
         obscureText: hidePassword,
       );
 
-  bool flagPasswordAgain = false;
   Widget buildPasswordAgain() => TextFormField(
         controller: controllerPasswordAgain,
         decoration: InputDecoration(
@@ -339,14 +387,13 @@ class _SignupViewState extends State<SignupView> {
         ),
         style: TextStyle(
           color: flagPasswordAgain
-              ? Color.fromARGB(255, 9, 129, 228)
-              : Color.fromARGB(255, 168, 168, 168),
+              ? kPrimaryColor
+              : grey,
         ),
         maxLength: 20,
         onChanged: (value) {
           setState(() {
             if (value!.length < 7) {
-              
               flagPasswordAgain = false;
             } else {
               flagPasswordAgain = true;
@@ -355,7 +402,7 @@ class _SignupViewState extends State<SignupView> {
         },
         validator: (value) {
           if (value != controllerPassword.text) {
-            return 'Passwords do not match';
+            return 'Passwords do not match.';
           }
           return null;
         },

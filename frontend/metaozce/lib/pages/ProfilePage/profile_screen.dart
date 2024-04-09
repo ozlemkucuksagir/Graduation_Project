@@ -10,7 +10,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Background(
-      title: "Profilim",
+      title: "Profile",
       child: ProfileScreenView(),
     );
   }

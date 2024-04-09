@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 const kPrimaryColor2 = Color.fromARGB(255, 9, 129, 228) ;
 const grey =Color.fromARGB(255, 168, 168, 168);
-const kPrimaryColor = Color.fromARGB(255, 1, 145, 138) ;
-
+const kPrimaryColor = Color.fromARGB(255, 2, 142, 177) ;
+const kPrimaryColor3 = Color.fromARGB(255, 1, 145, 138) ;
 const kPrimaryLightColor = Color(0xFF5DC7BC);
 const kPrimaryBackLightColor = Colors.white70;
 const kPrimaryBackMidColor = Color(0xFFeaeef6);
@@ -18,5 +18,5 @@ const textSubExtraColor = Color(0xFF039371);
 const double defaultPadding = 11.0;
 const kPrimaryUltraLightColor = Color.fromARGB(255, 197, 236, 232);
 const String baseURL = "http://212.68.34.108:8080/";
-const iconColor = Color.fromARGB(255, 9, 129, 228);
+const iconColor =   Color.fromARGB(255, 2, 142, 177) ;
 

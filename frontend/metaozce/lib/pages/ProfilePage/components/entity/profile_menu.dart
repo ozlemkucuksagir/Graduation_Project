@@ -42,7 +42,7 @@ class ProfileMenu extends StatelessWidget {
               text,
               style: TextStyle(color: Colors.black54),
             )),
-            Icon(Icons.arrow_forward_ios),
+            Icon(Icons.arrow_forward_ios,color: iconColor,),
           ],
         ),
       ),
