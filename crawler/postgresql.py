@@ -186,7 +186,6 @@ for page_number in range(1, 53):  #53
             cursor.execute('UPDATE otel3 SET "imageURL" = %s WHERE otel_ad = %s', (resim_url, otel_ad))
 
 
-
  
 
 
